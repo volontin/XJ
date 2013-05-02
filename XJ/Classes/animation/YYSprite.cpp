@@ -99,16 +99,16 @@ void YYSprite::setFrame(YYFrameData * frameData,bool isMirror){
     for (int i = 0; i < frameData->rectAmount;i++) {
         int rectID = ((CCInteger *)frameData->rectIndexArray-> objectAtIndex(i))->getValue();
         YYRect *rect = (YYRect*)ani->imageRectDataArray ->objectAtIndex(rectID);
-        float offSetX = ((CCInteger *)frameData->rectXArray->objectAtIndex(i))->getValue();
-        float offSetY = ((CCInteger *)frameData->rectYArray-> objectAtIndex(i))->getValue();
+        float offsetX = ((CCInteger *)frameData->rectXArray->objectAtIndex(i))->getValue();
+        float offsetY = ((CCInteger *)frameData->rectYArray-> objectAtIndex(i))->getValue();
 
         unsigned char transformType = ((CCInteger*)frameData->transformTypeArray->objectAtIndex(i))->getValue();
         
         CCRect rect1 = CCRectMake(rect->x, rect->y, rect->width, rect->height );
         
-        CCPoint point = CCPointMake((offSetX + rect->width / 2.0f), -(offSetY + rect->height / 2.0f) );
+        CCPoint point = CCPointMake((offsetX + rect->width / 2.0f), -(offsetY + rect->height / 2.0f) );
         if (isMirror) {
-            point  = CCPointMake(- (offSetX + rect->width / 2.0f), -(offSetY + rect->height / 2.0f) );
+            point  = CCPointMake(- (offsetX + rect->width / 2.0f), -(offsetY + rect->height / 2.0f) );
         }
         setMoudle(rect->imageIndex ,rect1, point ,transformType ,i,isMirror);
     }
@@ -178,11 +178,11 @@ bool YYSprite::isCollisioned(CCRect rect){
     for (int i = 0; i < frameData->rectAmount;i++) {
         int rectID = ((CCInteger *)frameData->rectIndexArray-> objectAtIndex(i))->getValue();
         YYRect * imageRect = (YYRect *)ani->imageRectDataArray ->objectAtIndex(rectID);
-        float offSetX = ((CCInteger *)frameData->rectXArray->objectAtIndex(i))->getValue();
-        float offSetY = ((CCInteger *)frameData->rectYArray-> objectAtIndex(i))->getValue();
-        CCPoint point = ccp(getPosition().x + offSetX, getPosition().y - offSetY);
+        float offsetX = ((CCInteger *)frameData->rectXArray->objectAtIndex(i))->getValue();
+        float offsetY = ((CCInteger *)frameData->rectYArray-> objectAtIndex(i))->getValue();
+        CCPoint point = ccp(getPosition().x + offsetX, getPosition().y - offsetY);
         if (isFaceToRight()) {
-            point  = ccp(getPosition().x - offSetX, getPosition().y - offSetY);
+            point  = ccp(getPosition().x - offsetX, getPosition().y - offsetY);
         }
         CCRect rect1 = CCRectMake(point.x, point.y, imageRect->width, imageRect->height);
         if (rect.intersectsRect(rect1)) {
@@ -197,11 +197,11 @@ bool YYSprite::isTouched(cocos2d::CCPoint point){
     for (int i = 0; i < frameData->rectAmount;i++) {
         int rectID = ((CCInteger *)frameData->rectIndexArray-> objectAtIndex(i))->getValue();
         YYRect * imageRect = (YYRect *)ani->imageRectDataArray ->objectAtIndex(rectID);
-        float offSetX = ((CCInteger *)frameData->rectXArray->objectAtIndex(i))->getValue();
-        float offSetY = ((CCInteger *)frameData->rectYArray-> objectAtIndex(i))->getValue();
-        CCPoint point1 = ccp(getPosition().x + offSetX, getPosition().y - offSetY);
+        float offsetX = ((CCInteger *)frameData->rectXArray->objectAtIndex(i))->getValue();
+        float offsetY = ((CCInteger *)frameData->rectYArray-> objectAtIndex(i))->getValue();
+        CCPoint point1 = ccp(getPosition().x + offsetX, getPosition().y - offsetY);
         if (isFaceToRight()) {
-            point1  = ccp(getPosition().x - offSetX, getPosition().y - offSetY);
+            point1  = ccp(getPosition().x - offsetX, getPosition().y - offsetY);
         }
         if (point.x > point1.x && point.y > point1.y && point.x < point1.x + imageRect->width && point.y < point1.y + imageRect->height) {
             return true;

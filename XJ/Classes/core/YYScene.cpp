@@ -122,6 +122,7 @@ void YYScene::ccTouchesEnded(CCSet * touches,CCEvent *event)
 }
 
 void YYScene::update(float delayTime){
+    processRecievedMessages();
     touchHandle();
     fightSpriteLayer->update();
     updateScreenDatumPoint();
