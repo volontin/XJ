@@ -6,7 +6,7 @@
 //
 //
 
-#include "FileReadManager.h"
+#include "../common/FileReadManager.h"
 #include "YYAnimation.h"
 #include "YYAnimationData.h"
 #include "YYFrameData.h"

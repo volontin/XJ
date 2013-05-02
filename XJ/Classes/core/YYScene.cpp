@@ -6,7 +6,7 @@
 //
 //
 
-#include "Common.h"
+#include "../common/Common.h"
 
 #include "YYScene.h"
 #include "YYRoadLayer.h"
@@ -53,10 +53,10 @@ void YYScene::onEnter(){
     setSceneSize(CCSizeMake(960*2, 640));
     backgroundLayer = YYBackgroundLayer::create();
     backgroundLayer->setAnchorPoint(ccp(0,0));
-     backgroundLayer->setPosition(ccp(0,0));
+    backgroundLayer->setPosition(ccp(0,0));
     foregroundLayer = YYForegroundLayer::create();
     foregroundLayer->setAnchorPoint(ccp(0,0));
-     foregroundLayer->setPosition(ccp(0,0));
+    foregroundLayer->setPosition(ccp(0,0));
     roadLayer = YYRoadLayer::create();
     roadLayer->setAnchorPoint(ccp(0,0));
     roadLayer->setPosition(ccp(0,0));
@@ -167,5 +167,13 @@ void YYScene::updateScreenDatumPoint(){
     roadLayer->setPosition(ccp(-screenX,-screenY));
     fightSpriteLayer->setPosition(ccp(-screenX,-screenY));
     closeShotLayer->setPosition(ccp(-screenX,-screenY));
-//    controlUILayer->setPosition(getScreenDatumPoint());
+    //    controlUILayer->setPosition(getScreenDatumPoint());
+}
+void YYScene::processRecievedMessages(){
+    
+}
+
+void YYScene::receivedMessage(const char * strings){
+    CCArray *array = split_string(strings, '\n');
+    messagePool->addObjectsFromArray(array);
 }

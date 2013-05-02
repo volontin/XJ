@@ -6,7 +6,7 @@
 //
 //
 
-#include "Common.h"
+#include "../common/Common.h"
 #include "YYPlayer.h"
 #include "YYScene.h"
 
@@ -34,7 +34,7 @@ void YYPlayer::update(void){
     if (isHoldFire) {
         if (getActionState() == kActionNormal) {
             setActionState(kActionAttack);
-            setAnimationByID(ACTION_ATTACK_0, false, isFaceToRight());
+            setAnimation(ACTION_ATTACK_0, false, isFaceToRight());
         }else if(currentFrameIndex > getCurrentActionData()->startFrameIndex + 1){
             isContinueAttack = true;
         }
@@ -58,26 +58,26 @@ void YYPlayer::updateAnimation(){
         frameIntervalCount = 0;
         if(currentFrameIndex < getCurrentActionData()->endFrameIndex){
             currentFrameIndex ++;
-            setFrameByID(currentFrameIndex,isFaceToRight());
+            setFrame(currentFrameIndex,isFaceToRight());
         }else{
             isAnimationOver = true;
             if(isRepeatAnimation){
                 currentFrameIndex = getCurrentActionData()->startFrameIndex;
-                setFrameByID(currentFrameIndex,isFaceToRight());
+                setFrame(currentFrameIndex,isFaceToRight());
             }else{
                 switch (_animationID) {
                     case ACTION_STAND:
                     case ACTION_WALK:
                         currentFrameIndex = getCurrentActionData()->startFrameIndex;
-                        setFrameByID(currentFrameIndex,_isFaceToRight);
+                        setFrame(currentFrameIndex,_isFaceToRight);
                         break;
                     case ACTION_ATTACK_0:
                         if(isContinueAttack){
                             isContinueAttack = false;
-                            setAnimationByID(ACTION_ATTACK_0, false, isFaceToRight());
+                            setAnimation(ACTION_ATTACK_0, false, isFaceToRight());
                             setActionState(kActionAttack);
                         }else{
-                            setAnimationByID(ACTION_STAND, true, isFaceToRight());
+                            setAnimation(ACTION_STAND, true, isFaceToRight());
                             setActionState(kActionNormal);
                         }
                         
@@ -144,7 +144,7 @@ void YYPlayer::touchBegan(CCPoint preTouch,CCPoint currentTouch){
             default:
                 break;
         }
-        setAnimationByID(ACTION_WALK, true,isFaceToRight());
+        setAnimation(ACTION_WALK, true,isFaceToRight());
     }
 }
 
@@ -156,6 +156,6 @@ void YYPlayer::touchEnded(CCPoint preTouch,CCPoint currentTouch){
     isHoldFire = false;
     if (getActionState() == kActionNormal) {
         setOffsetPerFrame(ccp(0,0));
-        setAnimationByID(ACTION_STAND,true,isFaceToRight());
+        setAnimation(ACTION_STAND,true,isFaceToRight());
     }
 }

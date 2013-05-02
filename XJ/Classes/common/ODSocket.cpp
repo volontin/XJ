@@ -7,11 +7,13 @@
 //
 
 #include "ODSocket.h"
+#include "../common/Common.h"
+
 #include <errno.h>
 #ifdef WIN32
 #pragma comment(lib, "wsock32")
 #endif
-#include "Common.h"
+
 USING_NS_CC;
 
 ODSocket::ODSocket(SOCKET sock)

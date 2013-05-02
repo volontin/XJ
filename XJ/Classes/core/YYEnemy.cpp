@@ -6,8 +6,8 @@
 //
 //
 
+#include "../common/Common.h"
 #include "YYEnemy.h"
-#include "Common.h"
 
 #define HORIZONTAL_SPEED 15
 #define VERTICAL_SPEED 10
@@ -52,21 +52,21 @@ void YYEnemy::updateAnimation(){
         frameIntervalCount = 0;
         if(currentFrameIndex < getCurrentActionData()->endFrameIndex){
             currentFrameIndex ++;
-            setFrameByID(currentFrameIndex,isFaceToRight());
+            setFrame(currentFrameIndex,isFaceToRight());
         }else{
             isAnimationOver = true;
             if(isRepeatAnimation){
                 currentFrameIndex = getCurrentActionData()->startFrameIndex;
-                setFrameByID(currentFrameIndex,isFaceToRight());
+                setFrame(currentFrameIndex,isFaceToRight());
             }else{
                 switch (_animationID) {
                     case ACTION_STAND:
                     case ACTION_WALK:
                         currentFrameIndex = getCurrentActionData()->startFrameIndex;
-                        setFrameByID(currentFrameIndex,_isFaceToRight);
+                        setFrame(currentFrameIndex,_isFaceToRight);
                         break;
                     case ACTION_ATTACK_0:
-                        setAnimationByID(ACTION_STAND, true, isFaceToRight());
+                        setAnimation(ACTION_STAND, true, isFaceToRight());
                         setActionState(kActionNormal);
                         break;
                     default:
@@ -99,10 +99,10 @@ void YYEnemy::processAI(){
                 
                 if (getPosition().y >= targetSprite->getPosition().y + VERTICAL_SPEED) {
                     setOffsetPerFrame(ccp(0,-VERTICAL_SPEED));
-                    setAnimationByID(ACTION_WALK, true, isFaceToRight());
+                    setAnimation(ACTION_WALK, true, isFaceToRight());
                 }else if(getPosition().y <= targetSprite->getPosition().y - VERTICAL_SPEED){
                     setOffsetPerFrame(ccp(0,VERTICAL_SPEED));
-                    setAnimationByID(ACTION_WALK, true, isFaceToRight());
+                    setAnimation(ACTION_WALK, true, isFaceToRight());
                 }else{
                     int8_t offsetX = 0;
                     int8_t offsetY = targetSprite->getPosition().y - getPosition().y;
@@ -114,15 +114,15 @@ void YYEnemy::processAI(){
                                 offsetX = targetSprite->getPosition().x - getPosition().x - rangeOfAttack.width;
                                 setOffsetPerFrame(ccp(offsetX,offsetY));
                             }
-                            setAnimationByID(ACTION_WALK, true, isFaceToRight());
+                            setAnimation(ACTION_WALK, true, isFaceToRight());
                         }else{
                             setOffsetPerFrame(ccp(0,0));
                             if(isAttackable){
-                                setAnimationByID(ACTION_ATTACK_0, false, isFaceToRight());
+                                setAnimation(ACTION_ATTACK_0, false, isFaceToRight());
                                 setActionState(kActionAttack);
                                 isAttackable = false;
                             }else{
-                                setAnimationByID(ACTION_STAND, true, isFaceToRight());
+                                setAnimation(ACTION_STAND, true, isFaceToRight());
                             }
                         }
                         
@@ -134,22 +134,22 @@ void YYEnemy::processAI(){
                                 offsetX = targetSprite->getPosition().x - (getPosition().x - rangeOfAttack.width);
                                 setOffsetPerFrame(ccp(offsetX,offsetY));
                             }
-                            setAnimationByID(ACTION_WALK, true, isFaceToRight());
+                            setAnimation(ACTION_WALK, true, isFaceToRight());
                         }else{
                             setOffsetPerFrame(ccp(0,0));
                             if(isAttackable){
-                                setAnimationByID(ACTION_ATTACK_0, false, isFaceToRight());
+                                setAnimation(ACTION_ATTACK_0, false, isFaceToRight());
                                 setActionState(kActionAttack);
                                 isAttackable = false;
                             }else{
-                                setAnimationByID(ACTION_STAND, true, isFaceToRight());
+                                setAnimation(ACTION_STAND, true, isFaceToRight());
                             }
                         }
                     }
                 }
             }else{
                 setOffsetPerFrame(ccp(0,0));
-                setAnimationByID(ACTION_STAND, true, isFaceToRight());
+                setAnimation(ACTION_STAND, true, isFaceToRight());
             }
         }
     }

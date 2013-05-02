@@ -10,6 +10,7 @@
 #define __XJ__YYScene__
 
 #include <cocos2d.h>
+#include "ODSocket.h"
 
 class YYRoadLayer;
 class YYBackgroundLayer;
@@ -18,10 +19,11 @@ class YYControlUILayer;
 class YYFightSpriteLayer;
 class YYCloseShotLayer;
 
-class YYScene : public cocos2d::CCScene,public cocos2d::CCStandardTouchDelegate{
+class YYScene : public cocos2d::CCScene,public cocos2d::CCStandardTouchDelegate,public SocketReciever{
     
     CC_SYNTHESIZE(cocos2d::CCSize, sceneSize, SceneSize);//场景大小
     CC_SYNTHESIZE(cocos2d::CCPoint, screenDatumPoint, ScreenDatumPoint);//屏幕基准点（左下点）相对游戏场景的坐标
+    CC_SYNTHESIZE_RETAIN(cocos2d::CCArray *, messagePool,MessagePool);//接受服务器发送信息的池
 private:
     bool isTouchBegan,isTouchesMoved,isTouchesEnded;//是否有触屏操作(滑动、点击)
     cocos2d::CCPoint preTouchPoint,currentTouchPoint;//上一触摸点和当前触摸点
@@ -54,6 +56,10 @@ public:
     virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
     virtual void ccTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
     virtual void ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
+
+    virtual void receivedMessage(const char * strings);
+    void processRecievedMessages();
+    
     void update(float delayTime);
     void touchHandle(void);
     void updateScreenDatumPoint();

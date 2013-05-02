@@ -6,8 +6,8 @@
 //
 //
 
+#include "../common/Common.h"
 #include "YYRoadLayer.h"
-#include "Common.h"
 #include "YYScene.h"
 
 USING_NS_CC;

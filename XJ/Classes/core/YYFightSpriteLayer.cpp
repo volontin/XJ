@@ -27,13 +27,13 @@ void YYFightSpriteLayer::onEnter(){
     CCPoint position = ccp(100,200);
     player->setPosition(position);
     CCPoint point = player->getPosition();
-    player->setAnimationByID(1, true, true);
+    player->setAnimation(1, true, true);
     addChild(player);
     YYEnemy * enemy = YYEnemy::create();
     enemy->initWithAnimation("enemy1", "enemy1", "action");
     position = ccp(700,200);
     enemy->setPosition(position);
-    enemy->setAnimationByID(1, true, false);
+    enemy->setAnimation(1, true, false);
     enemy->setTargetSprite(player);
     enemy->setFightData();
     addChild(enemy);
@@ -55,14 +55,16 @@ void YYFightSpriteLayer::sortSprite(){
         YYFightSprite * sprite1 = (YYFightSprite *)getChildren()->objectAtIndex(i);
         YYFightSprite * fs = NULL;
         int x = i;
+        int tempY = sprite1->getPosition().y;
         for (int j = i + 1; j < getChildren()->count();j++) {
             YYFightSprite * sprite2 = (YYFightSprite *)getChildren()->objectAtIndex(j);
-            if (sprite1->getPosition().y < sprite2->getPosition().y) {
+            if (tempY < sprite2->getPosition().y) {
+                tempY = sprite2->getPosition().y;
                 fs = sprite2;
                 x = j;
             }
         }
-        if (fs) {
+        if (tempY != sprite1->getPosition().y) {
             sprite1->retain();
             getChildren()->replaceObjectAtIndex(i, fs);//fs->retain(),sprite1->release()
             getChildren()->replaceObjectAtIndex(x, sprite1);

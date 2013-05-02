@@ -10,7 +10,7 @@
 
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-#include "YYScene.h"
+#include "core/YYScene.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
